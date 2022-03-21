@@ -1,0 +1,486 @@
+> 350	ROM_CALL			Done ?		Debug			Note
+Note:	An * means partial debug. (Well the function in some circunstance works)
+	HEAP	:
+		HeapAlloc		+		*			Heap functions have some difference: first you can alloc up to 220 K, which is a good point, no ? But contrary to AMS, if you are in lack of Handle (in the table), it won't try to increase the table.
+		HeapAllocESTACK		+		*			= HeapAlloc since EStack is fixed
+		HeapAllocPtr		+		*
+		HeapAllocThrow		+		
+		HeapAllocHigh		+		*
+		HeapAllocHighThrow	+		
+		HeapRealloc		+		*	
+		HeapFree		+		*
+		HeapFreeIndir		+		*
+		HeapFreePtr		+		*
+		HeapCompress		+		*
+		HeapMoveHigh		+		
+		HeapGetLock		+		*
+		HeapLock		+		*
+		HLock			+		*
+		HeapPtrToHandle		+		*
+		HeapAvail		+		*			Can be > 65520 !
+		HeapDeref		+		*
+		HeapEnd			+		*
+		HeapGetHandle		+		*			Contrary to AMS, you'll have 2000 handles. It won't try to augment the number of handles in case of an error.
+		HeapMax			+		*
+		HeapSize		+		*
+		FreeHandles		+		*
+	KEYS	:
+		kbhit			+		*
+		GKeyIn			+		*
+		GKeyDown		+		
+		GKeyFlush		+		*
+		pushkey			+		*
+		ngetchx			+		*
+		WordInList		+		*
+		QModeKey		+
+		QSysKey			+		
+		OSInitBetweenKeyDelay	+		*
+		OSInitKeyInitDelay	+		*
+		OSEnableBreak		+		*
+		OSDisableBreak		+		*
+		OSCheckBreak		+		*
+		OSClearBreak		+		*
+		OSdqueue		+		*
+		OSenqueue		+		*
+		OSqhead			+		*
+		OSqinquire		+		*
+		OSqclear		+		*
+	GRAPH	:
+		DrawStr			+		*
+		DrawChar		+		*
+		DrawLine		+		*			Only attribute A_REVERSE, A_NORMAL and A_XOR are supported ! (=> All lines function have the same problem !) It is slower than AMS for Horizontal line (But faster for other). ToDo: Speed Up for Horizontal LINE !!!!!
+		ScrRectFill		+		*
+		ScreenClear		+		*
+		DrawPix			+		*
+		MoveTo			+		*		
+		LineTo			+		*
+		FontGetSys		+		*
+		FontSetSys		+		*
+		SetCurAttr		+		*
+		SetCurClip		+		*
+		PortSet			+		*			It allows even non 239x127 screen (Just like AMS !)
+		PortRestore		+		*
+		ScrRect			+		*
+		FontCharWidth		+		*
+		DrawStrWidth		+		*
+		ScrRectOverlap		+		*
+		QScrRectOverlap		+		*
+		ScrRectScroll		+		*			The implementation is far from perfect...
+		ScrRectShift		+		*			
+		DrawIcon		+		*			Contrary to AMS, Pedrom doesn't use PutPixel for this task. Shade attribute may be wrong.
+		DrawFkey		+		
+		FillTriangle		+		*
+		FillLines2		+		*
+		DrawClipPix		+		*
+		DrawClipLine		+		*
+		DrawClipEllipse		+		*
+		DrawMultiLines		+		*
+		DrawClipRect		+		*
+		DrawClipChar		+		*
+		BitmapInit		+		*
+		BitmapSize		+		*
+		BitmapPut		+		*			
+		BitmapGet		+		*
+	ERROR/JUMP:
+		ER_catch		+		*
+		ER_success		+		*
+		ER_throw		+		*
+		ER_throwVar		+		*
+		longjmp			+		
+		setjmp			+		
+	MEMORY / STRINGS :					All these functions will have a problem if the len is > 65536 (It is a bug of PedroM).
+		memchr			+		*
+		memcmp			+		*
+		memcpy			+		*	Limited to 1Mb 
+		memmove			+		*	Limited to 1Mb 
+		memset			+		*	Limited to 1Mb 
+		_memset			+		*	Limited to 1Mb 
+		strlen			+		*
+		strcat			+		*
+		strcpy			+		*
+		strchr			+		*
+		strcmp			+		*
+		strncat			+		*
+		strncmp			+		*
+		strncpy			+		*
+		strcspn			+		*
+		strpbrk			+		*
+		strrchr			+		*
+		strspn			+		*
+		strstr			+		*
+		strerror		+		*
+		cmpstri			+		*
+		strtok			+		
+		sprintf			+		*
+		vcbprintf		+		*	Tigcc's hack works fine.
+	ST	:
+		ST_eraseHelp		+		*
+		ST_batt			+		*
+		ST_busy			+		*
+		ST_folder		+		*
+		ST_helpMsg		+		*
+		ST_refDsp		+		*
+		ST_precision		+		*			Do nothing since this feature is not-available
+		ST_angle		+		*			"
+		ST_graph		+		*			"
+		ST_readOnly		+		*			"
+		ST_stack		+		*			"
+	MISC	:
+		idle			+		*
+		off			+		*
+		OSContrastUp		+		*
+		OSContrastDn		+		*
+		OSSetSR			+		*
+		NeedStack		+		*
+		HToESI			+		*
+		NoCallBack		+		
+		QSysProtected		+		
+		OSReset			+		*
+		cmd_disphome		+					Does just a ScreenClear. Maybe I will change this.
+		EX_patch		+		*
+		CharNumber		+		
+	VAT	:
+		FolderCur		+		*
+		FolderGetCur		+		*
+		AddSymToFolder		+		
+		FindSymInFolder		+		
+		FolderAdd		+		*
+		FolderCount		+		*
+		FolderDel / FolderClear	+		*
+		FolderFind		+		
+		FolderOp		+		*
+		FolderRename		+		
+		HSymDel			+		*			Contrary to AMS, this function can't delete folders.
+		HSYMtoName		+		*
+		SymAdd			+		*
+		SymAddMain		+		*
+		SymAddTwin		+		*
+		SymDel			+		*
+		SymDelTwin		+		*
+		SymMove			+		*
+		FolderCurTemp		+		
+		FolderAddTemp		+		
+		FolderDelTemp		+		
+		FolderDelAllTemp	+		
+		TempFolderName		+		
+		SymFindFirst		+		*			Only 0, 1 & 2 flag works (Well, the main flags)
+		SymFindNext		+		*
+		SymFindPrev		+		*			
+		SymFindFolderName	+		
+		SymFindPtr		+		*
+		SymFindMain		+		*
+		SymFind			+		*
+		SymFindHome		+		*
+		ValidateSymName		+		*
+		SymSysVar		+		*
+		CheckSysFunc		+		*
+		CheckReservedName	+		*
+		ResetSymFlags		+		
+		CheckCurrent		+		
+		MakeHSym		+		*
+		DerefSym		+		*
+		SymCmp			+		*
+		SymCpy			+		
+		SymCpy0			+		
+		StrToTokN		+		*
+		TokToStrN		+		*
+		IsMainFolderStr		+		*
+		FolderFind		+					
+		VarStore		+		*			STOF_ELEMENT is not supported
+		VarRecall		+					The flag is not used
+		VarCreateFolderPopup	+					
+	TIMERS	:	
+		OSFreeTimer		+		*
+		OSTimerCurrentVal	+		*
+		OSTimerExpired		+		*
+		OSTimerRestart		+		*
+		OSRegisterTimer		+		*
+		OSVFreeTimer		+		*
+		OSVRegisterTimer	+		*		
+	ARCHIVE :
+		EM_abandon		+		*			It will free the handle from the table, but if you call it directly, and after do a reset, your file won't be destroyed ! 
+		EM_blockVerifyErase	+		*
+		EM_findEmptySlot	+		*			It doesn't modify the Flash Rom contrary to AMS
+		EM_GC			+		*			It doesn't display any dialog box / It doesn't use a garbesh sector since I think it is a very bad thing : you use this sector too much contrary to others ! So GC uses the RAM for temporary storage. It is sure, but you may don't have enought RAM...
+		EM_survey		+		*			
+		EM_write 		+		*			Does nothing if you call it directly without disabling the Flash Software protection.
+		FL_write		+		*			Does nothing if you call it directly without disabling the Flash Software protection.
+		EM_moveSymFromExtMem	+		*
+		EM_moveSymToExtMem	+		*
+		EM_twinSymFromExtMem	+		*			Twin symbols doesn't work like AMS. It works like unarchived Libraries for Kernel programs (ie it uses the COMPAT field to store the old handle). Don't cry : it should be tranparent for your program.
+		FL_download		+		*			
+		AB_prodid		+		*
+		AB_prodname		+		*
+		FL_getVerNum		+		*
+		AB_serno		+		*			It takes only the first 5 bytes of the serial number (I don't know how to access the last 2).
+	LINK	:
+		OSCheckSilentLink	+		*			The implementation of these 2 functions are quite different from AMS.
+		OSLinkCmd		+		*			It works fine.
+		LIO_RecvData		+		*
+		LIO_SendData		+		*
+		OSLinkOpen		+		*
+		OSLinkClose		+		*
+		OSLinkReset		+		*
+		OSReadLinkBlock		+		*
+		OSWriteLinkBlock	+		*
+		OSLinkTxQueueInquire	+		*
+		OSLinkTxQueueActive	+		*
+		CheckLinkLockFlag	+		
+		cmd_sendcalc		+		*
+		cmd_sendchat		+		*			cmd_sendchat == cmd_sendcalc ! (Warning for 92 owners)
+		sendcalc		+		*			
+		cmd_getcalc		+		*			
+		getcalc			+		*			
+	LONG	:
+		_ds16u16		+		*			I hope there aren't any bugs : theses functions are quite complicated.
+		_ms16u16		+		*			"
+		_du16u16		+		*			"
+		_mu16u16		+		*			"
+		_ds32s32		+		*			"
+		_ms32s32		+		*			"
+		_du32u32		+		*			"
+		_mu32u32		+		*			"
+	FLOAT	:								Pedrom floating point functions are 15% slower than AMS in general (Ti has worked a lot for those functions). A little bit more precise nevertheless. For my defense, I just want to recall that I don't have passed many times to implement them. The used algorithms are VERY basics. As a consequence, it is very easy to debug it ;) NOTE: Functions will never create negative Zeros.
+		bcdadd			+		*
+		bcdbcd			+		*			TODO: Really use long arg (Now it may have some problems if abs(number)>655350)
+		bcdsub			+		*
+		bcdcmp			+		
+		bcddiv			+		*
+		bcdlong			+		*			Some problems may happen if the number is too big.
+		bcdmul			+		*
+		bcdneg			+
+		ceil			+
+		fabs			+					I hope I haven't exchanged ceil & floor
+		floor			+					"
+		fmod			+					I think it is wrong for negative values (To check)
+		acos			+
+		asin			+
+		atan			+
+		atan2			+
+		itrig
+		trig
+		sincos
+		acosh			+
+		asinh			+
+		atanh			+
+		cos			+
+		sin			+
+		tan			+
+		cosh			+
+		sinh			+
+		tanh			+
+		log10			+
+		exp			+
+		log			+
+		pow			+
+		sqrt			+
+		float_class		+
+		frexp10			+
+		fpisanint		+
+		init_float		+					Does nothing
+		is_float_infinity	+
+		is_float_negative_zero	+
+		is_float_positive_zero	+
+		is_float_signed_infinity+
+		is_float_transfinite	+
+		is_float_unsigned_inf_or_nan+
+		is_float_unsigned_zero	+
+		is_nan			+
+		round12			+
+		round14			+					Does not round exponent.
+		round12_err		+
+	WINDOWS	:								All windows have a duplicate screen. You can not disable it. All functions will draw in it, and if the window is visible will draw on the screen. As a concequence, contrary to AMS you may have 2 windows activited on the screen if they are no overlapping. They also set up the current CURSOR location which is used by the Command Shell, so using a Window Function will change the position of the Shell Command.
+		FirstWindow		+		*
+		DeskTop			+
+		ScrToHome		+
+		ScrToWin		+
+		MakeWinRect		+
+		RectWinToWin		+	
+		RectWinToScr		+	
+		WinOpen			+		*			The window look is quite different from AMS !
+		WinReOpen		+		*			
+		WinClose		+		*			
+		WinActivate		+		*
+		WinDeactivate		+		
+		WinBegin		+		*
+		WinEnd			+		
+		WinDupStat		+		
+		WinBackupToScr		+		*
+		WinHide			+		
+		WinAttr			+		*
+		WinBackground		+		
+		WinFont			+		*
+		WinGetCursor		+		
+		WinHeight		+		
+		WinHome			+		*
+		WinMoveCursor		+		
+		WinMoveRel		+		
+		WinMoveTo		+		
+		WinWidth		+				
+		DrawStaticButton	+		*			Button have a problem of clipping. (Text is not clipped).
+		DrawWinBorder		+					
+		WinBitmapGet		+		
+		WinBitmapPut		+					
+		WinBitmapSize		+		
+		WinChar			+		*			Contrary of AMS, in TTY mode, if the cursor arrived at the upper-right of the client area of the window, it will scroll the client area to display the next char !
+		WinCharXY		+					
+		WinStr			+		*	
+		WinStrXY		+		*			
+		WinClr			+		*
+		WinEllipse		+		
+		WinFill			+		
+		WinFillTriangle		+		
+		WinFillLines2		+
+		WinLine			+		
+		WinLineNC		+		
+		WinLineRel		+		
+		WinLineTo		+		
+		WinPixGet		+		
+		WinPixSet		+		
+		WinRect			+		
+		WinScrollV		+		*		
+		WinScrollH		+					
+	ESTACK	:
+		top_estack		+		*			The EStack has a fixed size.
+		check_estack_size	+		*
+		reset_control_flags	+					Does nothing until I find some usefull flag
+		push_quantum		+		*
+		push_quantum_pair	+		
+		push_between		+
+		delete_between		+		
+		deleted_between		+
+		assign_between		+					
+		min_quantum		+
+		push_END_TAG		+		*
+		push_LIST_TAG		+
+		push_Float		+					No round14 done
+		next_expression_index	+		*			Tag: $BC -> $F9 will throw an error.
+		push_expr_quantum	+
+		push_expr2_quantum	+
+		delete_expression	+
+		deleted_expression	+
+		move_between_to_top	+
+		moved_between_to_top	+	
+		HS_popEstack		+		*
+		remaining_element_count	+					
+		estack_to_short		+
+		estack_to_ushort	+
+		estack_number_to_Float	+					Integer/Fraction will thrown an error
+		GetValue		+					Thrown values may be wrong
+		NG_tokenize		+					It depends on push_parse_text
+		TokenizeSymName		+					System flags and error not implemented
+		push_parse_text		+		*			'<' ,'>' ... may have a false priority (according to +/-) VAR a-z are not pushed in a single tag way. Special funcs ('log', 'sin') are pushed just like user func. Numbers are always pushed as Float. Only +-*/,{"( are valid operators. "2-" is valid (it shouldn't). "2x" is pushed as 2, then x (It doesn't push '*'). 3.3.3 is pushed like 3.3, then .3 so it returns .3. "+2" is interpreted as "ans + 2" where ans is an internal value (Result of last calcul in FReg1)
+		NG_approxESI		+		*			Can not return symbolic arg.
+		NG_graphESI		+		*			handle is a useless arg
+		NG_rationalESI		+		*			It does like approxESI
+		NG_execute		+		*			Theses 4 functions are equal
+		NG_RPNToText		+		*			Needs display_statement. Extra args are not used.
+		display_statements	+		*			Works only with BCD, UserFunc, +-*/^, String, var & List. Extra args are not used. () may do errors.
+		Parse1DExpr		+		*			" Same function as display_statement. Extra args are not used.
+		Parse2DExpr							
+		Parse2DMultiExpr						
+		Print2DExpr							
+		Parms2D								
+		push_string		+					Needed by tictex. Strange very strange (push_ANSI_string ?). Needs Parse1DExpr.
+		EX_getArg 		+
+		EX_getBCD 		+
+		EX_stoBCD		+		
+		are_expressions_identical+					Very simple one.
+		all_tail		+		
+		any_tail		+		
+		last_element_index	+		
+	POPUP	:								PopUp's implementation are not perfect, even if it should work well : First the witdh of the window is fixed (and the calculated height is also fixed !). And you have some leaks of memory when using Sub-Dialogs.
+		PopupNew		+		*
+		PopupAddText		+		*
+		PopupDo			+		*
+		PopupClear		+
+		PopupText		+
+	MENU	:								MenuHandle == MenuExecHandle !
+		MenuNew			+		*			Menu doesn't work like original. I hope it will always work fine... Like PopUp windows size are fixed, not calculated.
+		MenuBegin		+		*
+		MenuOn			+
+		MenuEnd			+		*
+		MenuAddIcon		+		
+		MenuAddText		+		*
+		MenuKey			+		*
+		MenuSubStat		+
+		MenuTopStat		+
+		MenuUpdate		+
+		MenuCheck		
+		QMenuTopSelect		
+	DIALOG	:
+		ERD_dialog		+		*
+		ERD_process		+		*			=ERD_dialog
+		DlgMessage		+		*			Buttons are not available / Window size does not change.
+		VarOpen								TODO
+		VarNew
+		VarSaveAs
+		DialogNew		+		*			The CallBack does nothing for the moment :( TODO
+		DialogAdd		+		*			Only 2,7,8,14 work !
+		DialogDo		+		*
+	EVENT	:
+		CB_fetchTEXT		+
+		CB_replaceTEXT		+
+		EV_registerMenu		+
+		EV_captureEvents	+
+		EV_clearPasteString	+
+		EV_centralDispatcher	+					EV_CentralDispatcher will reset the calc !
+		EV_getSplitRect		+					there is not Side
+		EV_notifySwitchGraph	+					there is not Side
+		EV_switch		+					there is not Side
+		EV_paintWindows		+					Rely on EV_paintOneWindow
+		EV_paintOneWindow	+
+		EV_sendEvent		+
+		EV_sendEventSide	+					= EV_sendEvent since there is not Side
+		EV_sendString		+
+		EV_startTask		+
+		EV_startSide		+
+		EV_startTask		+
+		EV_getc			+
+		EV_eventLoop		+
+		EV_defaultHandler	+					Many special KEY_PRESS may thown a 'romcall unavailable' error (VarLink, Catalog, Char, ... since the respective functions are not yet implemented. Todo :))
+		XR_stringPtr		+					As AMS, it is very internal. You may not able to use it by yourself.
+		HelpKeys		+					A little bit different from AMS
+	MODE	:								Very simple since Mode options are not available
+		MO_currentOptions	+
+		MO_defaults		+
+		MO_digestOptions	+
+		MO_isMultigraphTask	+
+		MO_notifyModeChange	+
+		MO_modeDialog		+
+		MO_sendQuit		+					
+	HOME	:
+		HomeExecute		+		*			
+		HomePushEStack 		+					Because there isn't any Home Application, this function throws an error.
+		HS_newFIFONode		+					Because there isn't any Home Application, this function throws an error.
+		HS_pushFIFONode		+					Because there isn't any Home Application, this function throws an error.
+		HS_getFIFONode		+					Because there isn't any Home Application, this function returns 0.
+		HS_getEntry		+					Because there isn't any Home Application, this function returns 0.
+		HS_getAns		+					Because there isn't any Home Application, this function returns 0.
+		HS_freeFIFONode		+					Because there isn't any Home Application, this function returns 0.
+		HS_freeAll		+					Because there isn't any Home Application, this function returns 0.
+		HS_deleteFIFONode	+					Because there isn't any Home Application, this function returns 0.
+		HS_chopFIFO		+					Because there isn't any Home Application, this function returns 0.
+		HS_countFIFO		+					Because there isn't any Home Application, this function returns 0.
+	MD5	:								Taken from Aladdin Enterprises
+		MD5Init			+
+		MD5Update		+
+		MD5Final		+
+		MD5Done			+
+	CERT	:
+		copen			+
+		copensub		+
+		ceof			+
+		cfindfield		+
+		cgetc			+
+		cgetflen		+
+		cgetfnl			+
+		cgetnl			+
+		cgetsl			+
+		ctell			+
+		cwrite			+
+		cread			+
+		cputns			+
+		cputnl			+
+		cputhdr			+
+		

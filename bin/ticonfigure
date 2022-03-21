@@ -1,0 +1,5 @@
+#!/bin/bash
+# Wrapper script to be used instead of configure,
+# to configure your general library to be linked with PedroM.
+# It just builds the library. 
+./configure --host=m68000-unknow-none --srcdir=. CC="`dirname $0`/titigcc" AS=$TIGCC/bin/as AR=$TIGCC/bin/ar-tigcc LD=$TIGCC/bin/ld-tigcc NM="`dirname $0`/tinm" AR_FLAGS=-o RANLIB="echo" --disable-shared ac_cv_prog_cc_stdc= ac_cv_func_memset=yes ac_cv_func_memmove=yes ac_cv_func_strchr=yes ac_cv_func_strerror=yes ac_cv_func_strtol=yes ac_cv_func_strtoul=yes $@

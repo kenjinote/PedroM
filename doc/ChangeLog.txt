@@ -1,0 +1,449 @@
+       Title: PedroM History
+     Version: See last entry.
+ Platform(s): TI-89, TI-92+, V200 and Titanium
+      Author: PpHd 
+    Web Site: See pedrom.txt
+      E-Mail: See pedrom.txt
+
+v0.72 and less:
+	No history available.
+	
+v0.73:	* First History Version
+	* Fix bug in HeapRealloc if Handle is archived (<- Extended).
+	* Cursor size on 89 is smaller (<- Uther).
+	* Boot sets IO port $700017 to 0 (<- Extended)
+	* Update Compat.txt
+	* Update RomCalls.txt
+	* Diamond + '+' / '-' works better (Didn't lose the STATUS).
+	* Cursor speed has been increased.
+	* On 92+, 2nd+space = '$'. On 89, 2nd+clear = '$'
+	* Fix PopupDo on 89 (CENTER was wrong on 89).
+	* Add 'rmarc' command (<- Extended).
+	* TokenizeSymName & TokenizeName check if folder & file are valid. (<- No more crash if you give a too long filename in side).
+	* Fix crash bug: if you enter a too long input in 'Enter YES to confirm', it crashed.
+	* Sign '-' works (Fix Int1 which returns a wrong value for it?).
+	* Change script Header to 'PedroM (<= Script First Line Syntax Error).
+	* Add support of < > <= >= = != in NG_execute.
+	* Exchange the value of AlphaLock and ShiftAlphaLock in KEY_MAJ.
+	* ST_modKey now accepts ALOCK and SALCK
+	* ngetchx/GKeyIn now displays ALOCK and SALCK
+	* ST line is higher.
+	* SHIFT/2ND/3RD indicators don't turn Alpha Lock off.
+	* Last displayed status is saved (No more graphical bug in BackGammon).
+	* Improve the way of displaying the floats : if the exponent is between -1 and 5, it displays them in a more friendly way (dddd.dddd instead of d.dddddEexpo).
+	* Fix some warnings in PedroM.h
+	* Little change in LIO_sendData & LIO_ReceiveData so that the return value depends on the type of error.
+
+v0.74:	* Add new RomCalls atan2 (To debug !!!)
+	* reset_estack_size uses the same rts as EstackReInit. (Reduce size)
+	* New command: 'read'.
+	* Add new global var: SHELL_FLAGS.
+	* Create 'DispArgument' & DispReturn functions in shell. Reduce size.
+	* Fix bugs in EM_moveToExtMem and EM_moveFromExtMem : HSym args were wrong.
+	* New command: autoarc.
+	* New feature: The sent files are automatically archived ! (Fix me: check is we don't lose some info during the time the file is archived). As a consequence, you can send a lot of files at the same times (More than the RAM !)
+	* Change the Replace Keys in side (Now it is F1 & F5 instead of ' ' & a). <= Ti89
+	* Remove command 'HelpKeys'
+	* Add shortcut DIAMOND+'k' or DIAMOND+'EE' to display the help keys window.
+	* Add a complete Char set for side (Far from perfect). 
+	* Fix side (draw_char/draw_str, draw_text & side_loop) to use the complete char set.
+	* Fix bug if you call the Help Windows.
+	* Fix Side Chars Table: it displays from char 16 to 255 ! (It is huge now !)
+	* Problem: It seems a68k has some problems with the line 32767. If a label is defined in such a line, it is simply ignored. Kevin, help !
+	* Reduce the register usage of TranslateArgs routine (shell.asm).
+	* Much more Error Link Messages.
+	* Trap #4 restarts APD timer.
+	* Trap #4 doesn't restart anymore Link (I think it is better since it can lose some bytes).
+	* Restart Auto-Pausing system even if you enter void line.
+	* Remove 'Link Dump' command. (I think it is useless until I rewrite it).
+	* TI89 Help is better printed.
+	* Calls Install Vector in InstallTib function.
+	* Dump all the packets. 
+	
+v0.75:	* Rewrite OSReadLink to improve	its reaction due to a Receive Buffer overflow. It should increase Link speed.
+	* LIO_SendData & LIO_ReceiveData don't call Idle anymore.
+	* Heap Max calls Heap Compress before searching.
+	* Reduce size of Read Packet.
+	* Reduce size of OSWriteLinkBlock.
+	* Fix bug in CB_replaceTEXT (under very low memory conditions).
+	* Rewrite again OSReadLink to really improve its speed. It seems the link problems on HW2 are now fixed.
+	* Update PedroM to be compatible with PreOS 0.66
+	* Sign '-' is compatible with AMS.
+	* Update Key Codes of Home & Catalog on 89.
+	* Add new Keys for the 89 (Diamond + key).
+	* Update clean command. No more confirm.
+	* Rewrite a little strlen
+	* Fix bug of strncat.
+	* Update a few trap #4 (Setup new ports).
+	* Calling autoarc without arg display its value.
+	* Calling setpath without arg display its value.
+	* Calling setfkey without arg display its value.
+	* Remove dispfkey command (Call setfkey without any arg instead).
+	* Fix Translate Arg so that it skips the space before the arg (You can put now command + space + space + arg1 + space+space+arg2...)
+	* Fix a bug in echo command (Forget to display a return).
+	* Add TAB char in fputchar (9).
+	* Update string format for ls/help/mem (Use TAB) => Fix graphical bugs on 89.
+	* Change Comment Char in script to '#' to be more Shell Script Compatible.
+	* Change Script Signature to "#!PedroM" to be more Shell Script Compatible.
+	* New var: CUR_FOLDER_HD (To reduce size and optimize code). Update code to use it.
+	* Fix a bug in ST_eraseHelp : Space Dementia is now playable !
+	* Fix a bug in boot.asm : Forget to call SetLCDMEM before FlashInit :)
+	* Side now displays status: ALPHA / ALOCK / CAPS
+	* Speed up a few ALPHA (Keep) + key
+	* Update Completion: 
+		When you press ON key, it completes as much as possible.
+		If there are many entries, and if no char can be put, a menu is displayed with all the entries.
+		I think it is the best solution, no ?
+	* Fix DIALOG.Do: Screen State isn't corrupt anymore.
+	* Update SetLCDMEM so that it sets also the VRAM address for HW2 and sets the used font & attr. It also clears the LCD.
+	* Update the messages and the font for Fatal/System errors.	
+	* Improve in HeapCheck its validation of the Heap (Check HeapTable too !)
+	* Fix a deadly bug (The only way to solve it was to remove the batts): EStackReInit checks if Estack Handle is valid !
+
+v0.76:	* Fix bug of StrToTokN
+	* Fix bug of ON Key (I hope).
+	* Little change of Boot Code. I hope PedroM for 89 HW1 will work better !
+	* Fix HW1 bug in boot code (Wrong orig value of $600017)
+
+v0.77:	* Add 'Not a script' when a text file is not a script.
+	* Update side: Unlock Handle before reallocating it when saving file. (It was the error memory problem).
+	* Fix bug in Script (Wrong signature).
+	* Fix bug in HeapLock / HeapUnlock / HLock: H_NULL doesn't crash the calc anymore.
+	* Add Process support (File Process.asm & variables): add a task switcher.
+	* KEY_SWITCH creates another Shell (In Shell Command, In Side, In Pause).
+	* Add new commands ps / kill / go
+	* New Shell Options (Both option are turned off by default): 
+		+ Switch Instead Of Off: In a program, instead of turn off the calc, it switches.
+		+ KEY_SWITCH support: In ngetchx/GKeyIn function, KEY_SWITCH performs a switch.
+	* Process Name are stored in the Process Handle instead of its address.
+	* OSContrastUp / OSContrastDn doesn't destroy d0-d1 anymore. Tbo68k works.
+	* Fix a bug in FloatRangeReducByMod.
+	* Fix precision bug of FloatPow10.
+	* Exp function gives right (?) values.
+	* Fix bug of FloatSub !!!!
+	* Rewrite sinh / cosh / tanh.
+	* Fix a bug in BitmapPut: SCR_RECT was a little too big (Ti-Majhong works fine now).
+	* Fix (?) bug of Batt Checker.
+	* Side doesn't open In-Use files anymore.
+	* The launched files are set in-use. Can't run a 'InUse' program anymore.
+	* Clean command erases all background process.
+	* Fix a bug in EvalBcd. (Can't use EXEC_RAM as a temporary buffer !!!!)
+	* Fix AB_serrno (Can't use EXEC_RAM as a temporary buffer !!!!)
+	* Fix ln function. But it isn't very precise
+	* PPG are launched from Ghost Space (PreOS/ext.asm)
+	* During trap#4, if the APD is < than 10s, it is set to 10s.
+	* Display the PedroM license when booting.
+	* Add 'install format' command.
+	* HeapPtrToHandle is much more AMS compatible.
+	* Use kernel::Ptr2Hd instead of HeapPtrToHandle in code now.
+	* Fix Estack bug: Bcd vars are now stored like AMS.
+	* Add 'Flags' command 
+	* Remove 'Autoarc' command. (Use flags AutoArchive=1 instead).
+	* Improve NG_arpproxESI: It can return STRING or LIST now.
+	* Improve display_statements: It can display LIST now.
+	* Fix bug of push_between (top_estack advanced too much).
+	* Now strings and lists work in the Command Line.
+	* Now x[2] if x is a list works and returns element 2 of the list.
+	* Estack's Lists are now in the right order.
+	* next_expression_index supports END_TAG & END_ESTACK_TAG.
+	* Fix bug of clean command: PID_clean was buggy.
+	* Change the char of Auto-Execution of the FKeys. It is now ;
+	* Add variables support in command: ls $x works.
+	* Variable 'args' is created at the beginning of a script.
+	* Improve the error messages displayed in case of an ER_THROW.
+	* DisplayESI doesn't overflow anymore when displaying BCD.
+	* Add dim & getkey
+	* Fix bug in push_parse_text: getkey()->x stores wrong value.
+	* First argument of STORE op is evaluated before calling VAR_store.
+	* Fix bug of completion: If you enter a word, then [ON] (With no space between the word and the cursor), it will display forever the menu.
+	* Fix bug in replace vars: Forget to catch errors.
+	* ShellExecuteCommand doesn't use ER_catch anymore.
+	* Caller of ShellExecuteCommand calls ER_catch before.
+	* Rewrite ScriptExecute: Er_catch is now use.
+	* Script stops if there is an error (It displays the line of the error).
+	* Fix side: if the save of the file failed, it forgets to unuse the file.
+
+v0.78:	* Fix 'start' problem: Forget to add 'push_END_TAG' before calling run_script("main\start") in shell.asm.
+	* Tiny modifications of the BOOT code.
+	* Fix bug of ST_eraseHelp: forget it wasn't a void function !
+	* Fix bug of idle function on 89. I hope it works on 89 HW1 now.
+	* Fix bug of PopupClear.
+	* Fix bug of completion in case of low memory condition (FIXME: To check!).
+	* Fix bug of address error if the shell has to display the complete menu if "main\s".
+	* Fix bug of circular definition if you call an asm program like this "main\stdlib": Use SymFindPtr in FindSymPath.
+	* Allow '\' char if it is the last char of the directory in cd command.
+	* Fix bug of function strncmp: too many chars were compared.
+	* Improve speed of Find/Replace of side (And the previous fix, fix them).
+	* Change ABI of VATAddSpecialFile.
+	* FlashInit is not separated in FlashAddArchivedFiles & FlashCheck.
+	* FlashAddArchivedFiles now uses VATAddSpecialFile (Safier since this functions does a lot of check).
+	* Optimize a few the initialization of all sector loops in flash.asm
+	* Fix bug of Popup in dialog, if you press ESC.
+	* Add QSort function (from tigcc sources). A little few change, too.
+	* VAT now uses qsort instead of bubble sort.
+	* Process: It uses LongWord to copy stack to buffer (Size Buffer increased of 2).
+	* SymMove checks if src name is inuse/archived/hidden before renaming it.
+	* Little change in dialog popups.
+	* Fix bug in StrToTokn.
+	* Add fopen/fclose/fread/fwrite/fgetc/fputc/rewind/ftell/fseek/fclearerr/fputs/fprintf/ferror/fflush/ungetc.
+	* Add stdin/stdout/stderr as stream.
+	* Add support of redirection: >, < and 2> work.
+
+v0.79:	* Optimize realloc function
+	* Rename str2nbr in atol (Even if it is more like atoul - Ascii TO Unsigned Long).
+	* Pressing ON in case of no character display the help (Completion).
+	* ShellExecuteCommand calls InitTerminal.
+	* Improve HomeExecute: if the len is 0, then it auto-calculates the length of the string. So, HomeExecute("ls -l >toto",0); works. #define system(s) HomeExecute(s,0)
+	* Fix 'start' bug: forget that push_END_tag destroy d0!
+	* Add support of >> redirection.
+	* Fix bug of VATAddSpecialFile: if you create archived files in other folders than main, you won't be able to boot PedroM!
+	* Optimize EM_blockVerifyErase.
+	* Fix bug in EM_moveSymFromExtMem: now uses HSym instead of SYM_ENTRY *
+	* Fix bug in EM_moveSymToExtMem: now uses HSym instead of SYM_ENTRY * (EM_GC may invalidate SYM_ENTRY) and optimize it too!
+	* ER_throw calls OSClearBreak before throwing errors.
+	* Add function errorPrintf
+	* Error messages of internal commands are now displayed in stderr.
+	* Respect Unix convention: commands must display the final RETURN, in terminal.
+	* Add function tmpname.
+	* Completion completes even variable like $xxx or ${xxxx
+	* Add all_tail romcall.
+	* Add any_tail romcall.
+	* Add last_element_index romcall.
+	* Optimize are_expressions_identical
+	* Skip first spaces when you enter a command
+	* Add support of Pipe redirection
+	* Add command more
+	* Remove AutoPausing Line Counter: use more instead :)
+	* Fix bug of tmpname.
+	* read now reads from stdin.
+	* Fix bug of read command (& fgetc!): characters are now echo in the screen.
+	* Fix bug of read command: echo 1 | read x y doesn't crash the calc.
+	* Fix bug of read command: final \n is not put in the string.
+	* Fix bug in produced TIB. Thanks to XDanger for reporting this. New and cleaner maketib.
+	* Optimize strcspn & strpbrk & strspn & strstr.
+	* Fix bug of EV_paintOneWindow.
+	* Optimize EV_startTask & EV_sendString & EV_sendEvent & EV_startSide & NeedStack.
+
+v0.80 alpha 1:
+	* Fix bug of bcdcmp (It corrupts -10(a6)!)
+	* HeapRealloc's romcall returns now an error if the newsize is > 65520.
+	* HeapMax() = min(HeapMax_Internal(), 65520), where HeapMax_Internal returns the real maximum allocatable size :)
+	* FL_MoveSymToExtMem checks also if it is not a FOLDER.
+	* Rename start_estack in bottom_estack.
+	* Hack for bottom_estack for ams 1.0x should work fine.
+	* Fix bug of sinh/cosh/tanh.
+	* _tt_Decompress gets the entries from register.
+	* Add PedroM Internal Program Interface Library (The PIPIL ;)).
+	* Add perror / getenv / system / setvbuf.
+	* Add support of tmpfile in file functions / Add tmpfile.
+	* Rewrite / optimize pipe.
+	* Add system folder. stdlib is now in this folder.
+	* Remove setpath. path is now a global variable (See pedrom.txt).
+	* Remove setapd. apd is now a global variable (system\apd).
+	* You can now use Left / Right in the command line.
+	* Fix (?) ON repetition problem.
+	* Remove the On-help combo.
+	* Add cat command.
+	* Add grep command.
+	* Fix bug of cp and unppg (it doesn't support wildcards).
+	* printf.c is compiled with Os.
+	* Fix bug of side/config (Auto-switch)
+	* Fix bug in process (due to longword copy)
+	* Completly rewrite TIB install.
+	* Add PID_CheckSwitch. 
+	* You can switch the current tasks DIAMOND+F1 / ... / DIAMOND+F8 .
+	* The PID is set during the booting of the shell to have a constant PID.
+	* Add exit and atexit function in library (Not from tigcc, but optimised ones ;))
+	* Add If/While commands.
+	* Script doesn't display the results of NG_execute anymore.
+	* Add 'testd' & 'testf' functions.
+	* Fix bug of some wrong global vars when switching process.
+	* NG_execute is called inside an ERROR_FRAME in side.
+	* Vars dealing with masking of keys are now non-switchable.
+	* Process: Save the auto-int level.
+	* Process: Fix bug of Trap #4 (Doesn't start a new shell).
+	* Side: Use system command instead of NG_execute.
+	* '=' and '!=' support string too.
+	* Fix bug of path completion.
+
+v0.80 alpha 2:
+	* Corrupted version :(
+
+v0.80 alpha 3:
+	* Fix bug of cursor on 89 (Thanks Sasume).
+	* Speed up cursor.
+	* Add function time.
+	* Add AMS 2.0x romcall table, *** BUT *** the size of the table is still the AMS 1.0x one,
+	so PedroM is still detected as AMS 1.0x. But programs who detects PedroM may use the few defined romcalls.
+	* Add AMS 2.0x FiftyMSecTick, TokenizeName, bottom_estack, BatTooLowFlash, push_zstr, CertificateMemory, ReleaseDate, ReleaseVersion, FlashMemoryEnd.
+	* Rename FiftyMSecTick to Tick to avoid some fatal error of A68k ;) 37000 lines is really too much for it :D
+	* Print web site when booting.
+	* Add ex01.c.
+
+v0.80 alpha 4:
+	* Fix bug about HSym in EM_moveSymTo/FromExtMem. It was already fixed in 0.74, but I have reintroduced them in v0.79 :( (Thanks Uther nevertheless).
+    	* Fix bug of Pow in Shell.
+    
+v0.81:	* Optimize in size EX_getArg (Use _reg form of next_expression_index).
+	* Fix bug of cat command: it doesn't close the opened files!
+	* Optimize in size MakeWinRect.
+	* Fix bug and optimize in size ScrToHome.
+	* Fix bug of WinCharXY and WinChar: forget that pushed C chars are NOT like pushed asm chars. (Update WinStr too!)
+	* Optimize in size delete_expression, push_expr_quantum, push_quantum.
+	* Fix crash bug of EV_sendEvent(CM_ACTIVATE).
+	* EV_defaultHandler(CM_ACTIVATE) clears screen.
+	* Add [2nd]+space shortcut in HelpKeys.
+	* f[r]open check if a sym is a text file if it is opened in text mode [TO CHECK]
+	* Fix bug of Input String Shell: Del char was buggy.
+	* cd without parameter is equal to cd main.
+	* Separate History Commands for each process (When you start a new process, the old history are copied).
+	* Rename internals SetLcdMem and SetTerminal to InitGraphSystem and ReInitGraphSystem.
+	* ReInitGraphSystem resets Clipping area too.
+	* Rename "Syntax Error " in "Error ".
+	* Rename 'cls' command in 'clear' to be more Unix like.
+	* Trap_11 does just a rte.
+	* Fix bug of switch in ngetchx/GKeyIn
+	* Trap #5 turns off the calc (But it can't switch): don't use it. I may extend this trap.
+	* Fix apd / switch bug in GetKey.
+	* Fix bug of auto-repeat alpha key on 89 (Thx hwti).
+	* Add auto-repeat bit in FIFO as suggested by hwti.
+	* Add "var in use" error.
+	* Fix bug of 'clean' command which doesn't clean the in-use programs correctly.
+	* Fix bugs of 'grep' command.
+	* Add '/dev/null' as a special file for fopen.
+	* Fix bugs in file functions (ftell, feof, ... for stdin/stdout crash the calc).
+	* Optimize vcbprintf.
+	* Use tigcc v0.95 for building the C files.
+	* BitmapPut is now fully clipped!
+	* Speed Up memset.
+	* Speed Up memcpy.
+	* Add [2nd]+Left and [2nd]+Right in the Shell.
+	* Parser not longer accepts "2 3 x 4", "hezlp..", ...
+	* Fix copyright notice of Ellipse.c
+	* Improve the Task Switcher: 
+		- DIAMOND+Fn starts a new shell if no process is already created.
+		- Change the API of PID_Go and PID_Init.
+	* Avoid using Ghost Space (<= Titanium).
+	* Kill command doesn't wait for confirm anymore.
+	* Fix bug of parser.
+	* ValidateSymName accepts now 'A' -> 'Z. As a consequence, PedroM file system becomes case sensitive.
+	(You can go to Level 2 of Calc Rogue now).
+	* Speed up ScreenClear.
+	* Add CharNumber (To debug).
+	* Cleanup build process a lot (Use of Makefile).
+	* Fix maketib to produce HW3 comptable TIB.
+	* side is now under GPL.
+	* Minor fix in link.asm and boot.asm
+	* You can build PedroM without non-GPL stuff (Add -vGPL).
+	* Rewrite functions for Long.asm.
+	* Add new Kernel core of Preos 0.72.
+	* Simplify the launching code a lot.
+	* Add Heap Table in Romcalls
+	* Improve comments.
+	* Fix bug of completion which isn't proceed correctly (at least!)	
+	* Allow space between '>' and file for redirection.
+	* Allow no space before '>' and redirection (except for 2> of course).
+	* Add support for alias. All string vars in system may be alias.
+	* Update OSReadLinkBlock. It should be faster, and should be able to receive more bytes.
+	* OSWriteLinkBlock doesn't check bit 1 of $60000C before writting it.
+	* New Install TIB under GPL thanks to JM!
+	* Fix bug of laucher of PPG due to new Kernel Core.
+	* Move internal activity and Link error before checking Receive Buffer.
+	* Remove some useless code (?) in Int4.
+	* Fix bug in TIB Installer: wrong receive code.
+	* Fix bug in clean: Freeze code.
+	* Fix bug while switching Process using DIAMOND+Fkey
+	* Free LibraryTable if it is null.
+	* clean display if it has freed some handles.
+	* Change the order of key scanning in Ints.asm.
+	* Fix bug in FolderDel: home folder wasn't locked and may moved while deleting.
+	Rewrite things so that is doesn't matter (smaller too).
+	* Add a nice "ProgressBar" for Install Tib.
+	* Fix bug of strncpy thanks to LionelA.
+	* Add "Error" symbol in TibInstall (displayed when a fatal error comes while receiving).
+	* Add "Build Time" together with PedroM version.
+	* Merge "Shell.asm" and "shell2.asm", and then split it in 
+	"ShellIO.asm" (The Human Interface), "System.asm" (system command) and "Builtin.asm"
+	(The builtin commands). This is a really better split.
+	However, I may have moved PedroM exported functions before Library.asm, which may result
+	in bug for PedroM programs (to check).
+RC5:
+	* Fix bug in completion: wrong # of chars was put.
+	* find_error_message now reports the error message of the shared linker.
+	* The error messages of the Shared Linker are now reported!
+	* Fix introduced bug of exported printf function (Wrong offset was stored).
+	* Fix bug in Preos Shared Linker: The SaveScreen flag didn't work.
+	* Add new code in Preos Shared Linker: since we want to be able to
+	reloc prog1, run prog1, swap process, reloc prog2, run prog2, swap, unreloc prog1
+	we can't use the same unreloc scheme as previously used.
+	* Fix introduced bug in FontCharWidth.
+	* Clean up: ER_THROW is now defined, and is used to throw errors!
+RC6:
+	* Reduce size by moving more functions to the "redirect" call trick.
+	* Fix introduced bugs: {2,3} wasn't parsed.
+	* Fix introduced bug of printf/sprintf: it returned a wrong number of chars.
+	* Fix introduced bug in dim("toto"): freezes instead of returning 4.
+	* Add new functions GetDataType and Smapyp
+RC7:
+	* Fix bug of SetFileInUseBit for tigcc's program (well it wasn't PedroM fault, but I have to support even buggy programs).
+	* Fix bug in find_error_message (a2 was corrupted).
+	* Add new option (DEBUG_ER_THROW)
+	* Fix critical bug on V200: FlashWrite doesn't write at all!!! Fix bugs in Tib.asm & Flash.asm
+RC8:
+	* If Desktop Window has dirty flag, clrscr is done.
+	Which make the programs using HSR to clean up while existing.
+	* clrscr clears Desktop window flag.
+	* Add 2nd+Alpha for Alpha Lock on 89.
+	* Add flags "StatusError" to display error in status line instead of Dialog Box.
+	* The handle of the ALPHA key on 89 should look like much more AMS:
+	 Keeping ALPHA while pressing keys, press the alpha keys. Releasing ALPHA, remove ALPHA status.
+	* clear - clear now erases the screen (just like the clear command).
+RC9:
+	* Fix bug in CharNumber.
+	* Fix bug in HeapSize for archived files.
+	* Fix bug in FloatSqrt (David Coz's Puzzle Bubble works now).
+	* Enable the PreOS Calculator Emulator, so that old Kernel programs run	on Titanium and V200.
+	* Fix bug of lauching nostub programs in RAM like AMS (ttstart("bobdat") works)	-- Forget to Unlock an handle.
+	* Tiny and useless optimization in AddKey (- 4 bytes).
+	* Alpha Lock is not turned off when entering a new command.
+	* Fix bug for TIGCC's printf due to GCC 4.
+	* Rewrite Battery code. I hope it works now.
+	* When returning to shell, it reinstalls original vectors.
+	(Bombermaze crashes doesn't freeze the calc anymore).
+	* Fix bug in VarStore (Bombermaze works).
+	* Add a patch to avoid bug of FlashZBomber (It assumes that HeapDeref returns the Handle*4. Makes it happy).
+
+RC10:	* Exchange CALCULATOR and CURRENT_WINDOW variables so that tiemu hack about Handles works.
+	* Fix stupid bug in internal functions (thx KK).
+	* Fix bug in files.c about ungetc (thx KK).
+	* Increase Warnings for C files.
+	* Remove "comparaison between signed and unsigned" in side.c
+	* Popup's size are now computed!
+	* Dialog's size are also computed!
+	* Fix bug in handling of id in Dialog's Pulldown.
+	* Dialogs computed size depends on title (add more size if there is a title).
+	* Rewrite EM_moveSymToExtMem so that it should be more resistent to power failure.
+	As a (bad) consequence, the Archive format as changed: when upgrading, you will lose all your archives!
+	Update EM_GC to support new ARC_SR_WRITTING entry.
+
+RC11:	* Tiny optimization of CU_interrupt.
+	* Fix bug of DefaultParmBlock for ti89: the size of the visible display was the one of a ti92.
+	* Fix bug of EM_survey: unusedSectors, BadSectors and AllExecptBaseCode
+
+v0.82 (Reduce Changelog): 
+      + Many bugs fixed: more application can be run,
+      + Optimize some functions,
+      + Update used version of Preos & stdlib.
+      + New system variables : font & linklog
+      + Add new builtin command: menu
+      + Fix auto repeat bug (it was too slow).
+      + New experimental RAM_THROW system call.
+      + Improve link stability.
+      + Add many missing commands in the PC-link protocol: it should work fine with TILP and TICONNECT.
+      + Change some system variables to make them more simple to use.
+      + New build system based on Unix Makefile and on ld-tigcc which provides a huge level of flexibility (allowing more developers to join and integration of Unix like libraries),
+      + Add support for signing of the OS.
+      + (optional) integration of the GMP( http://gmplib.org), MPFR (http://www.mpfr.org) and MAYLIB (a custom made library) which helps PedroM to provide a symbolic engine (New command: zs).
+
+v0.83 : The Martial Release.
+      + Add improvement asked by Folco (Handle of archived are kept).

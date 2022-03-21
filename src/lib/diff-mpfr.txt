@@ -1,0 +1,103 @@
+--- exceptions.c~	2008-01-01 04:29:09.000000000 +0100
++++ exceptions.c	2008-03-29 12:07:41.000000000 +0100
+@@ -22,10 +22,10 @@
+ 
+ #include "mpfr-impl.h"
+ 
+-unsigned int MPFR_THREAD_ATTR __gmpfr_flags = 0;
++unsigned int MPFR_THREAD_ATTR __gmpfr_flags /* = 0 */;
+ 
+-mp_exp_t MPFR_THREAD_ATTR __gmpfr_emin = MPFR_EMIN_DEFAULT;
+-mp_exp_t MPFR_THREAD_ATTR __gmpfr_emax = MPFR_EMAX_DEFAULT;
++mp_exp_t MPFR_THREAD_ATTR __gmpfr_emin /* = MPFR_EMIN_DEFAULT */;
++mp_exp_t MPFR_THREAD_ATTR __gmpfr_emax /* = MPFR_EMAX_DEFAULT */;
+ 
+ #undef mpfr_get_emin
+ 
+--- mpfr-impl.h~	2008-03-27 19:35:03.000000000 +0100
++++ mpfr-impl.h	2008-03-29 12:08:17.000000000 +0100
+@@ -833,9 +833,11 @@
+ #define mpfr_const_catalan(_d,_r) mpfr_cache(_d,__gmpfr_cache_const_catalan,_r)
+ 
+ #define MPFR_DECL_INIT_CACHE(_cache,_func)                           \
+- mpfr_cache_t MPFR_THREAD_ATTR _cache =                              \
++ mpfr_cache_t MPFR_THREAD_ATTR _cache
++/*
++=                              \
+     {{{{0,MPFR_SIGN_POS,0,(mp_limb_t*)0}},0,_func}}
+-
++*/
+ 
+ 
+ /******************************************************
+--- set_dfl_prec.c~	2008-01-01 04:29:10.000000000 +0100
++++ set_dfl_prec.c	2008-03-29 12:07:19.000000000 +0100
+@@ -23,8 +23,7 @@
+ #include "mpfr-impl.h"
+ 
+ /* default is IEEE double precision, i.e. 53 bits */
+-mp_prec_t MPFR_THREAD_ATTR __gmpfr_default_fp_bit_precision \
+-  = IEEE_DBL_MANT_DIG;
++mp_prec_t MPFR_THREAD_ATTR __gmpfr_default_fp_bit_precision /*  = IEEE_DBL_MANT_DIG*/;
+ 
+ void
+ mpfr_set_default_prec (mp_prec_t prec)
+--- set_rnd.c~	2008-01-01 04:29:10.000000000 +0100
++++ set_rnd.c	2008-03-29 12:07:09.000000000 +0100
+@@ -23,7 +23,7 @@
+ 
+ #include "mpfr-impl.h"
+ 
+-mp_rnd_t MPFR_THREAD_ATTR __gmpfr_default_rounding_mode = GMP_RNDN;
++mp_rnd_t MPFR_THREAD_ATTR __gmpfr_default_rounding_mode /* = GMP_RNDN*/;
+ 
+ void
+ mpfr_set_default_rounding_mode (mp_rnd_t rnd_mode)
+--- tests/tests.c~	2008-04-05 16:14:13.000000000 +0200
++++ tests/tests.c	2008-04-06 11:27:19.000000000 +0200
+@@ -495,6 +495,7 @@
+   char r;
+   int c;
+ 
++#if 0
+   fp = fopen (f, "r");
+   if (fp == NULL)
+     {
+@@ -635,4 +636,5 @@
+   mpfr_clear (z);
+ 
+   fclose (fp);
++#endif
+ }
+--- tests/tests.c~	2008-06-01 09:52:21.000000000 +0200
++++ tests/tests.c	2008-06-01 09:54:29.000000000 +0200
+@@ -40,8 +40,6 @@
+ # include <time.h>
+ #elif HAVE_SYS_TIME_H
+ #  include <sys/time.h>
+-#else
+-#  include <time.h>
+ #endif
+ 
+ #if HAVE_SYS_FPU_H
+@@ -243,10 +241,6 @@
+           struct timeval  tv;
+           gettimeofday (&tv, NULL);
+           seed = tv.tv_sec + tv.tv_usec;
+-#else
+-          time_t  tv;
+-          time (&tv);
+-          seed = tv;
+ #endif
+           gmp_randseed_ui (rands, seed);
+           printf ("Seed GMP_CHECK_RANDOMIZE=%lu "
+--- printf.c~	2009-02-25 13:41:15.000000000 +0100
++++ printf.c	2009-04-25 16:43:08.000000000 +0200
+@@ -28,7 +28,6 @@
+ #ifdef HAVE_STDARG
+ 
+ #include <stdarg.h>
+-#include <errno.h>
+ #include "mpfr-impl.h"
+ 
+ #ifdef _MPFR_H_HAVE_FILE

@@ -1,0 +1,38 @@
+--- t-pika.c~	2008-06-01 09:26:04.000000000 +0200
++++ t-pika.c	2008-06-01 09:26:54.000000000 +0200
+@@ -90,7 +90,7 @@
+   }
+ 
+   /* Maximum size of the stack. Don't extend it */
+-  may_kernel_start (0, 0);
++  may_kernel_start (200000, 0);
+   may_t x = may_set_str ("x");
+ 
+   // On parcourt les arguments pour rechercher les arguments pre operations
+--- may-impl.h~	2007-12-20 09:49:31.000000000 +0100
++++ may-impl.h	2008-03-30 10:58:34.000000000 +0200
+@@ -20,7 +20,6 @@
+ #ifndef __MAY_IMPL_H__
+ #define __MAY_IMPL_H__
+ 
+-#include <stdint.h>
+ #include <stdarg.h>
+ #include <limits.h>
+ #include <ctype.h>
+--- t-ihm.c~	2009-06-09 22:52:46.000000000 +0200
++++ t-ihm.c	2009-06-09 23:00:30.000000000 +0200
+@@ -141,11 +141,11 @@
+ static char *  update_variable (char *Buffer, int *save_it, may_t table[26])
+ {
+   *save_it = 0;
+-  char *a = strstr (Buffer, ":=");
++  char *a = strstr (Buffer, "\026");
+   if (a) {
+-    char *var = Buffer;
++    char *var = a+1;
+     *a = 0;
+-    a += 2;
++    a  = Buffer;
+     if (var[1] == 0 && var[0] >= 'a' && var[1] <= 'z') {
+       *save_it = var[0] - 'a' + 1;
+       if (*a == 0) {

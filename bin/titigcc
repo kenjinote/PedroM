@@ -1,0 +1,57 @@
+#!/bin/bash
+# Wrapper to tigcc
+# To compile (or link) a source code to be used with PedroM.
+
+libdir=$TIGCC/lib
+add="`dirname $0`/../src/c/PedroM-Internal.o"
+if test \! -f "$add" ; then
+    cd `dirname $add`
+    $TIGCC/bin/tigcc -o PedroM-Internal.o -c PedroM-Internal.c
+    cd -
+fi
+arglist=
+for i in $* ; do
+ case "$i" in
+     "-c")
+	 add=
+	 ;;
+     "-v")
+	 add=
+	 ;;
+     -L*)
+	 libdir="$libdir `echo $i  | perl -pi -e 's/^-L//g'`"
+	 ;;
+     -l*)
+	 name=`echo $i | perl -pi -e 's/^-l//g'`
+	 lib=
+	 if test "$name" = "m" ; then
+	     i=
+	 else
+	     for dir in $libdir ; do
+		 if test -f $dir/$name.a ; then
+		     lib=$libdir/$name.a
+		 elif test -f $dir/lib$name.a ; then
+		     lib=$dir/lib$name.a
+		 fi
+	     done
+	     if test "X$lib" = "X" ; then
+		echo "ERROR: library $name not found."
+		exit 1
+	     fi
+	     i=$lib
+	 fi
+	 ;;
+     *) ;;
+ esac
+ arglist="$arglist $i"
+done
+
+$TIGCC/bin/tigcc -ffreestanding -include "`dirname $0`/../src/c/PedroM-Internal.h" $arglist $add
+status=$?
+
+# Dute to a fucking bug in autoconf, when you cross compile,
+# it expects the fucking executable
+# to has the executable bit!
+chmod 755 *.9xz 2> /dev/null
+exit $status
+

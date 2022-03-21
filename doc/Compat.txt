@@ -1,0 +1,89 @@
+WARNING: This compatibility is from a previous version of PedroM (0.80)
+	 and is currently unmaintained.
+
+All the followings programs/games have been successfull run on PedroM :
+
+ Title					Comment
+ 
+ Another Mario 1.04			Perfect
+ Super Mario Bros 3 - 4th public demo 	Perfect
+ Super Mario Quest v1.1.0		Perfect
+
+ BigDyna beta 2				Perfect
+ BomberMaze68k 	v0.9b			Perfect
+ Super Bomberman 4 (Pollux)		Perfect
+
+ ChipLib				Perfect
+ Poker v2.52.1 				Can go to the menu screen. Freeze the calc.
+
+ BallRace3D v0.1			Nothing is displayed since it detects a HW2 calc. I can do nothing since it is a pure _nostub program. On a real calc, it should works fine.
+ CrockMan68k v1.14			Perfect execpt that it uses HW2 GrayScales even on HW1. See BallRace v0.1.
+ PacMan v1.0				Problem with Key reading (It access some strange keys...)
+ TurboBreakout68k v2.05			Perfect.
+  
+ Crystal Quest beta 0.62c		Perfect
+ Queue v0.8x				Menu / Crashes when trying to play because it called DrawLine with y0 =-1 (In a sub-function...)
+ Tetris v1.21-Kernel-AMS 2.0x comp	Perfect
+ Tetris v1.21-Nostub port 		Perfect
+
+ S.M.A. v0.40				Perfect
+ CF Public Beta 2			Perfect
+
+ Pokered v1.0				Perfect
+ Kirby's TilLand			Perfect
+ 
+ Phoenix Version 7.4			Perfect (Many other versions work too).
+ Evasive 0.7				Can be run / Slow, very slow <= DrawLine.
+ Solar Striker v1.0			Good.
+ Krypton II v0.08			Perfect.
+ Krypton v0.2b				Perfect. (Bad grayscales on emu).
+ 
+ Backgammon RC2				Good (Even if there is bad random numbers). Little problem with stat indicator.
+ Movem Released 06.03.1999		Perfect
+
+ JezzBall v1.8				Many graphical bugs due to a bug in JezzBall (DrawSprite add d2.l but it wan't cleared ! In AMS, some functions may return d1.hw= 0 , so). Fixs it it in PedroM by returning d1.l=0 in DrawStr (...)
+ Megacar v1.0				Crash (After I return d0.l =0 in DrawStr -Address Error in ConvStr-, it is perfect...) <Needs recompilation or convertion>
+
+ Source Guru				Perfect 
+ 
+ ZELDA x v.001b				Perfect
+ Zelda 89b				Perfect
+ ZELDA v0.3 By Aghnar 			Slow, but works fine.
+
+ Total Destruction beta v0.7		Ok, but you can't save/load a file.
+ 
+ TiChess v3				Perfect.
+
+ Tictex v3.20 & v3.30beta9		Perfect. (Except that in v3.30 it doesn't redraw the screen when quitting).
+ Sh'l v0.6 final			Perfect (Except a little graphical bug due to a too hight archive free).
+ Pct v0.94b				Perfect.
+ Einstein v0.3				It seems to work well if you overpass the AMS 2.03 limit...
+ Doors Explorer 2.02			Good (As good as on AMS...)
+ 
+ Ebook 					Perfect
+ HexView (Benoit Sherrer)		Perfect
+ HANDLE-Explorer v2.70			Perfect 
+ Hibview 0.1 fr				Ok, but crashes when exit
+ 
+ DB92-nostub4-0.38			Good (Even it was hard to be compatible). Some problems with traps... (3 ?)
+ CC					Can't be run <= needs AMS 2.0x at least
+ AS version for AMS1.0x			Ok.
+ 
+ Prosit v0.8.4				Could be run. Many window bugs (Nothing is displayed in the windows).
+ 
+ Monster				Ok
+ Hibtext				Ok
+ KTA					Ok
+ Yapt					Ok
+ 
+ Rodent					Ok (Slow). Problem with screen title.
+ Othello2				Ok
+ FAT Engine v1.10			Ok execpt FAT Loader.
+ 
+ CalcRogue				Crash if you call the PPG directly or try to run the unppg version (<= It didn't check the return value of LoadDll, since PedroM didn't run the program from the ghost space). Otherwise, it works !
+ CalcWars				Ok (The Grays blink a lot more than on AMS when you moved the cursor).
+ Arena3D				Ok but it uses a HeapAlloc(HeapMax()) to manage a file. This call reserve all the memory, and SymAdd may fail after. Not a really bug in PedroM since it mays occur on AMS too !
+ Sim 1c					Perfect
+ Space Dementia	v0.8			Perfect
+ Tetris Attack 68k			Perfect
+ Puzzle Bobble 0.7        		Ok

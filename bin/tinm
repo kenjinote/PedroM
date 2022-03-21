@@ -1,0 +1,14 @@
+#!/bin/bash
+# Nearly NM interface using tigcc -dump0
+var=
+$TIGCC/bin/ld-tigcc -dump0 "$1" 2> /dev/null | grep -v DUMP | grep -v "^Section" | grep -v "^  File:" | grep -v "^  Code" | grep -v "^  Data" | grep -v "(local)" | while read x ; do
+if test "X$var" = "X" ; then
+	var=`echo $x | cut -f1 -d':' | grep -v '0x'` 
+else
+	x=`echo $x | cut -f1 -d':'`
+	echo $x C $var
+	var=
+fi ; done
+
+
+

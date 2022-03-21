@@ -1,0 +1,181 @@
+--- invalid.c~	2007-08-30 20:31:40.000000000 +0200
++++ invalid.c	2008-03-27 19:28:33.000000000 +0100
+@@ -23,7 +23,6 @@
+ 
+ #include "config.h"
+ 
+-#include <signal.h>
+ #include <stdlib.h>
+ 
+ #if HAVE_UNISTD_H
+@@ -67,6 +66,7 @@
+ void
+ __gmp_invalid_operation (void)
+ {
+-  raise (SIGFPE);
++  int x = 0;
++  x = 1 / x;
+   abort ();
+ }
+--- rands.c~	2007-08-30 20:31:40.000000000 +0200
++++ rands.c	2008-04-05 09:37:08.000000000 +0200
+@@ -27,5 +27,5 @@
+ 
+ 
+ /* Use this via the RANDS macro in gmp-impl.h */
+-char             __gmp_rands_initialized = 0;
++char             __gmp_rands_initialized /* = 0 */;
+ gmp_randstate_t  __gmp_rands;
+--- tests/misc.c~	2007-08-30 20:31:41.000000000 +0200
++++ tests/misc.c	2008-04-05 08:52:31.000000000 +0200
+@@ -20,7 +20,7 @@
+ #include "config.h"
+ 
+ #include <ctype.h>
+-#include <signal.h>
++//#include <signal.h>
+ #include <stdio.h>
+ #include <stdlib.h>     /* for getenv */
+ #include <string.h>
+@@ -36,7 +36,7 @@
+ # if HAVE_SYS_TIME_H
+ #  include <sys/time.h>
+ # else
+-#  include <time.h>
++//#  include <time.h>
+ # endif
+ #endif
+ 
+@@ -105,9 +105,9 @@
+           seed = tv.tv_sec ^ (tv.tv_usec << 12);
+ 	  seed &= 0xffffffff;
+ #else
+-          time_t  tv;
+-          time (&tv);
+-          seed = tv;
++          //          time_t  tv;
++          //time (&tv);
++          //seed = tv;
+ #endif
+           gmp_randseed_ui (rands, seed);
+           printf ("Seed GMP_CHECK_RANDOMIZE=%lu (include this in bug reports)\n", seed);
+@@ -561,6 +561,8 @@
+ void
+ tests_sigfpe_done (void)
+ {
+-  signal (SIGFPE, SIG_DFL);
++  // signal (SIGFPE, SIG_DFL);
++  volatile int x = 0;
++  x = 1 / x;
+ }
+ 
+--- tests/spinner.c~	2007-09-01 12:09:03.000000000 +0200
++++ tests/spinner.c	2008-04-05 08:53:33.000000000 +0200
+@@ -20,7 +20,7 @@
+ 
+ #include "config.h"
+ 
+-#include <signal.h>
++//#include <signal.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #if HAVE_UNISTD_H
+@@ -32,6 +32,7 @@
+ 
+ #include "tests.h"
+ 
++#define SIG_ERR 17
+ 
+ /* "alarm" is not available on mingw32, and the SIGALRM constant is not
+    defined.  Don't bother with a spinner in this case.  */
+--- tests/memory.c~	2007-08-30 20:31:41.000000000 +0200
++++ tests/memory.c	2008-04-05 09:42:22.000000000 +0200
+@@ -48,7 +48,7 @@
+   struct header  *next;
+ };
+ 
+-struct header  *tests_memory_list = NULL;
++struct header  *tests_memory_list /* = NULL */;
+ 
+ /* Return a pointer to a pointer to the found block (so it can be updated
+    when unlinking). */
+@@ -217,6 +217,7 @@
+ void
+ tests_memory_start (void)
+ {
++  tests_memory_list = NULL;
+   mp_set_memory_functions (tests_allocate, tests_reallocate, tests_free);
+ }
+ 
+--- tests/tests.h~	2007-09-01 12:09:03.000000000 +0200
++++ tests/tests.h	2008-04-05 11:27:23.000000000 +0200
+@@ -70,7 +70,7 @@
+    there.  */
+ 
+ #define tests_setjmp_sigfpe()                   \
+-  (signal (SIGFPE, tests_sigfpe_handler),       \
++  (/*signal (SIGFPE, tests_sigfpe_handler),*/   \
+    setjmp (tests_sigfpe_target))
+ 
+ RETSIGTYPE tests_sigfpe_handler __GMP_PROTO ((int));
+--- tests/mpn/t-get_d.c~	2007-08-30 20:31:41.000000000 +0200
++++ tests/mpn/t-get_d.c	2008-06-01 09:48:02.000000000 +0200
+@@ -26,7 +26,6 @@
+ #include "config.h"
+ 
+ #include <setjmp.h>
+-#include <signal.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ 
+--- memory.c~	2009-04-25 16:12:01.000000000 +0200
++++ memory.c	2009-04-25 16:13:36.000000000 +0200
+@@ -24,10 +24,10 @@
+ #include "gmp-impl.h"
+ 
+ 
+-void *	(*__gmp_allocate_func) __GMP_PROTO ((size_t)) = __gmp_default_allocate;
++void *	(*__gmp_allocate_func) __GMP_PROTO ((size_t)) /* = __gmp_default_allocate*/;
+ void *	(*__gmp_reallocate_func) __GMP_PROTO ((void *, size_t, size_t))
+-     = __gmp_default_reallocate;
+-void	(*__gmp_free_func) __GMP_PROTO ((void *, size_t)) = __gmp_default_free;
++  /*= __gmp_default_reallocate*/;
++void	(*__gmp_free_func) __GMP_PROTO ((void *, size_t)) /*= __gmp_default_free*/;
+ 
+ 
+ /* Default allocation functions.  In case of failure to allocate/reallocate
+--- mpn/generic/mu_bdiv_q.c~	2009-04-14 14:36:30.000000000 +0200
++++ mpn/generic/mu_bdiv_q.c	2009-06-04 19:06:57.000000000 +0200
+@@ -117,6 +117,7 @@
+       mpn_mullow_n (qp, rp, ip, in);
+       qn -= in;
+ 
++#if WANT_FFT
+       if (ABOVE_THRESHOLD (dn, MUL_FFT_MODF_THRESHOLD))
+ 	{
+ 	  k = mpn_fft_best_k (dn, 0);
+@@ -124,6 +125,7 @@
+ 	  wn = dn + in - m;			/* number of wrapped limbs */
+ 	  ASSERT_ALWAYS (wn >= 0);		/* could handle this below */
+ 	}
++#endif
+ 
+       while (qn > in)
+ 	{
+--- mpn/generic/mul.c~	2009-04-14 14:36:30.000000000 +0200
++++ mpn/generic/mul.c	2009-06-04 19:08:12.000000000 +0200
+@@ -132,12 +132,14 @@
+       return prodp[un + vn - 1];
+     }
+ 
++#if WANT_FFT
+   if (ABOVE_THRESHOLD ((un + vn) >> 1, MUL_FFT_THRESHOLD) &&
+       ABOVE_THRESHOLD (vn, MUL_FFT_THRESHOLD / 3)) /* FIXME */
+     {
+       mpn_mul_fft_full (prodp, up, un, vp, vn);
+       return prodp[un + vn - 1];
+     }
++#endif
+ 
+   {
+     mp_ptr ws;
